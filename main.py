@@ -3,12 +3,16 @@ import numpy as np
 import scipy as sp
 
 
-age = []
+age = np.empty
 with open("/Users/joshuaathayde/github/CourseraDataScience/case_demographics_age.csv", mode='r') as csv_file:
     csv_reader = csv.DictReader(csv_file)
-    for row in csv_reader: age.append(row)
-age = np.array(age)
-print(age[0].keys())
+    for row in csv_reader:
+        temp = np.empty
+        for val in row.values():
+            np.append(temp, val)
+        np.append(age, temp)
+        print(np.shape(temp))
+print(np.shape(age))
 
 statewide = []
 with open("/Users/joshuaathayde/github/CourseraDataScience/statewide_cases.csv", mode='r') as csv_file:
@@ -30,12 +34,3 @@ with open("/Users/joshuaathayde/github/CourseraDataScience/case_demographics_eth
     for row in csv_reader: ethnicity.append(row)
 ethnicity = np.array(ethnicity)
 print(ethnicity[0].keys())
-
-#Average coronavirus cases in county:
-sum = 0
-totalCounties = 0
-for county in age[1:]:
-    if county['age_group'] != '':
-        sum += float(county['totalpositive'])
-        totalCounties += 1
-print(sum/totalCounties)
